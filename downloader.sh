@@ -15,7 +15,7 @@ echo $DIGESTS_URL
 #curl -sO $IMAGE_URL
 curl -sO $DIGESTS_URL
 
-sha512sum --quiet -c $IMAGE_Z.DIGESTS >/dev/null
+sha512sum -c $IMAGE_Z.DIGESTS >/dev/null
 if [ $? != 0 ]; then 
   echo "Error in download"
   exit 1
