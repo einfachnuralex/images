@@ -8,7 +8,7 @@ steps:
   image: einfachnuralex/downloader
   commands:
   - env 
-  - /bin/bash downloader.sh
+  - /bin/sh downloader.sh
   environment:
     VER: 2512.2.0
     OS_AUTH_URL:
