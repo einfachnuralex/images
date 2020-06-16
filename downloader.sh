@@ -12,7 +12,7 @@ IMAGE_URL=$URL/$ARCH/$VER/$IMAGE_Z
 echo $IMAGE_URL
 echo $DIGESTS_URL
 
-#curl -sO $IMAGE_URL
+curl -sO $IMAGE_URL
 curl -sO $DIGESTS_URL
 
 sha512sum -c $IMAGE_Z.DIGESTS >/dev/null
