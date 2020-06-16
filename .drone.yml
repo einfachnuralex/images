@@ -1,0 +1,80 @@
+---
+kind: pipeline
+type: kubernetes
+name: default
+
+steps:
+- name: downloader
+  image: einfachnuralex/downloader
+  commands:
+  - env 
+  - 
+  environment:
+    VER: 2512.2.0
+    OS_AUTH_URL:
+      from_secret: authurl
+    OS_PROJECT_ID:
+      from_secret: projectid
+    OS_PROJECT_NAME:
+      from_secret: projectname
+    OS_USER_DOMAIN_NAME:
+      from_secret: domain
+    OS_PROJECT_DOMAIN_ID:
+      from_secret: domain
+    OS_USERNAME:
+      from_secret: username
+    OS_PASSWORD:
+      from_secret: password
+    OS_REGION_NAME:
+      from_secret: region
+    OS_INTERFACE: public
+    OS_IDENTITY_API_VERSION: 3
+
+---
+kind: secret
+name: username
+get:
+  path: credentials
+  name: username
+
+---
+kind: secret
+name: password
+get:
+  path: credentials
+  name: password
+
+---
+kind: secret
+name: projectname
+get:
+  path: credentials
+  name: projectname
+
+---
+kind: secret
+name: projectid
+get:
+  path: credentials
+  name: projectid
+
+---
+kind: secret
+name: authurl
+get:
+  path: credentials
+  name: authurl
+
+---
+kind: secret
+name: domain
+get:
+  path: credentials
+  name: domain
+
+---
+kind: secret
+name: region
+get:
+  path: credentials
+  name: region
