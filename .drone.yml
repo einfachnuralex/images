@@ -10,7 +10,7 @@ steps:
   - wget -q https://stable.release.flatcar-linux.net/amd64-usr/2512.2.0/flatcar_production_openstack_image.img.bz2
   - wget -q https://stable.release.flatcar-linux.net/amd64-usr/2512.2.0/flatcar_production_openstack_image.img.bz2.DIGESTS
   - ls -la
-  - bunzip2 -d flatcar_production_openstack_image.img.bz2 && echo extracted
+  - bzip2 -dfv flatcar_production_openstack_image.img.bz2 && echo extracted
   - ls -la
   - openstack image create coreos-2512.2.0 --file flatcar_production_openstack_image.img --public --property os_distro='coreos' --property os_type='linux'
 
