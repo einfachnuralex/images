@@ -15,35 +15,7 @@ steps:
       cpu: 500
       memory: 500MiB 
   commands:
-  - wget -q https://stable.release.flatcar-linux.net/amd64-usr/2512.2.0/flatcar_production_openstack_image.img.bz2
-  - wget -q https://stable.release.flatcar-linux.net/amd64-usr/2512.2.0/flatcar_production_openstack_image.img.bz2.DIGESTS
-
-- name: downloader2
-  image: einfachnuralex/downloader:v0.5
-  commands:
-  - ls -la
-
-- name: downloader3
-  image: einfachnuralex/downloader:v0.5
-  resources:
-    requests:
-      cpu: 250
-      memory: 250MiB
-    limits:
-      cpu: 500
-      memory: 500MiB
-  commands:
-  - bzip2 -dfv flatcar_production_openstack_image.img.bz2 && echo extracted
-
-- name: downloader4
-  image: einfachnuralex/downloader:v0.5
-  commands:
-  - ls -la
-
-- name: downloader5
-  image: einfachnuralex/downloader:v0.5
-  commands:
-  - openstack image create coreos-2512.2.0 --file flatcar_production_openstack_image.img --public --property os_distro='coreos' --property os_type='linux'
+  - sleep 90
 
 # steps:
 # - name: downloader
