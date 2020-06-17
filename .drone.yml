@@ -7,24 +7,12 @@ steps:
 - name: downloader
   image: einfachnuralex/downloader:v0.5
   commands:
-  - /bin/bash downloader.sh
-  environment:
-    VER: 2512.2.0
-    URL: https://stable.release.flatcar-linux.net
-    ARCH: amd64-usr
-    IMAGE: flatcar_production_openstack_image.img
-    IMAGE_Z: flatcar_production_openstack_image.img.bz2
-- name: extractor
-  image: einfachnuralex/downloader:v0.5
-  commands:
-  - /bin/bash extractor.sh
-  environment:
-    IMAGE: flatcar_production_openstack_image.img
-    IMAGE_Z: flatcar_production_openstack_image.img.bz2
-  - name: uploader
-  image: einfachnuralex/downloader:v0.5
-  commands:
-  - /bin/bash uploader.sh
+  - wget -q https://stable.release.flatcar-linux.net/amd64-usr/2512.2.0/flatcar_production_openstack_image.img.bz2
+  - wget -q https://stable.release.flatcar-linux.net/amd64-usr/2512.2.0/flatcar_production_openstack_image.img.bz2.DIGESTS
+  - sha512sum -c flatcar_production_openstack_image.img.bz2.DIGESTS
+  - bzip2 -df flatcar_production_openstack_image.img.bz2
+  - ls -la
+  - openstack image create coreos-2512.2.0 --file flatcar_production_openstack_image.img --public --property os_distro='coreos' --property os_type='linux'
   environment:
     VER: 2512.2.0
     IMAGE: flatcar_production_openstack_image.img
