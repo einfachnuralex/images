@@ -11,8 +11,8 @@ IMAGE_URL=$URL/$ARCH/$VER/$IMAGE_Z
 
 echo $IMAGE_URL
 echo $DIGESTS_URL
-wget -sO $IMAGE_URL
-wget -sO $DIGESTS_URL
+wget $IMAGE_URL
+wget $DIGESTS_URL
   # sha512sum -c $IMAGE_Z.DIGESTS || exit 1
   # bunzip2 -d $IMAGE_Z
   # ls -l $IMAGE
