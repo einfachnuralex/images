@@ -5,7 +5,7 @@ name: default
 
 steps:
 - name: downloader
-  image: einfachnuralex/downloader
+  image: einfachnuralex/downloader:v0.1
   commands:
   - env
   - /bin/bash downloader.sh
