@@ -13,7 +13,7 @@ echo $IMAGE_URL
 echo $DIGESTS_URL
 curl -sO $IMAGE_URL
 curl -sO $DIGESTS_URL
-sha512sum -c $IMAGE_Z.DIGESTS || exit 1
-bunzip2 -d $IMAGE_Z
-ls -l $IMAGE
-openstack image create coreos-$VER --file $IMAGE --public --property os_distro='coreos' --property os_type='linux'
+  # sha512sum -c $IMAGE_Z.DIGESTS || exit 1
+  # bunzip2 -d $IMAGE_Z
+  # ls -l $IMAGE
+  # openstack image create coreos-$VER --file $IMAGE --public --property os_distro='coreos' --property os_type='linux'
