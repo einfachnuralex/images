@@ -4,63 +4,49 @@ type: kubernetes
 name: lala
 
 steps:
-- name: downloader1
-  pull: always
+- name: downloader
   image: einfachnuralex/downloader:v0.5
-  resources:
-    requests:
-      cpu: 250
-      memory: 250MiB
-    limits:
-      cpu: 500
-      memory: 500MiB 
   commands:
-  - sleep 90
-
-# steps:
-# - name: downloader
-#   image: einfachnuralex/downloader:v0.5
-#   commands:
-#   - /bin/bash downloader.sh
-#   environment:
-#     VER: 2512.2.0
-#     URL: https://stable.release.flatcar-linux.net
-#     ARCH: amd64-usr
-#     IMAGE: flatcar_production_openstack_image.img
-#     IMAGE_Z: flatcar_production_openstack_image.img.bz2
-# - name: extractor
-#   image: einfachnuralex/downloader:v0.5
-#   commands:
-#   - /bin/bash extractor.sh
-#   environment:
-#     IMAGE: flatcar_production_openstack_image.img
-#     IMAGE_Z: flatcar_production_openstack_image.img.bz2
-#   - name: uploader
-#   image: einfachnuralex/downloader:v0.5
-#   commands:
-#   - /bin/bash uploader.sh
-#   environment:
-#     VER: 2512.2.0
-#     IMAGE: flatcar_production_openstack_image.img
-#     IMAGE_Z: flatcar_production_openstack_image.img.bz2
-#     OS_AUTH_URL:
-#       from_secret: authurl
-#     OS_PROJECT_ID:
-#       from_secret: projectid
-#     OS_PROJECT_NAME:
-#       from_secret: projectname
-#     OS_USER_DOMAIN_NAME:
-#       from_secret: domain
-#     OS_PROJECT_DOMAIN_ID:
-#       from_secret: domain
-#     OS_USERNAME:
-#       from_secret: username
-#     OS_PASSWORD:
-#       from_secret: password
-#     OS_REGION_NAME:
-#       from_secret: region
-#     OS_INTERFACE: public
-#     OS_IDENTITY_API_VERSION: 3
+  - /bin/bash downloader.sh
+  environment:
+    VER: 2512.2.0
+    URL: https://stable.release.flatcar-linux.net
+    ARCH: amd64-usr
+    IMAGE: flatcar_production_openstack_image.img
+    IMAGE_Z: flatcar_production_openstack_image.img.bz2
+- name: extractor
+  image: einfachnuralex/downloader:v0.5
+  commands:
+  - /bin/bash extractor.sh
+  environment:
+    IMAGE: flatcar_production_openstack_image.img
+    IMAGE_Z: flatcar_production_openstack_image.img.bz2
+  - name: uploader
+  image: einfachnuralex/downloader:v0.5
+  commands:
+  - /bin/bash uploader.sh
+  environment:
+    VER: 2512.2.0
+    IMAGE: flatcar_production_openstack_image.img
+    IMAGE_Z: flatcar_production_openstack_image.img.bz2
+    OS_AUTH_URL:
+      from_secret: authurl
+    OS_PROJECT_ID:
+      from_secret: projectid
+    OS_PROJECT_NAME:
+      from_secret: projectname
+    OS_USER_DOMAIN_NAME:
+      from_secret: domain
+    OS_PROJECT_DOMAIN_ID:
+      from_secret: domain
+    OS_USERNAME:
+      from_secret: username
+    OS_PASSWORD:
+      from_secret: password
+    OS_REGION_NAME:
+      from_secret: region
+    OS_INTERFACE: public
+    OS_IDENTITY_API_VERSION: 3
 ---
 kind: secret
 name: username
