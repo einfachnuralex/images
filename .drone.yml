@@ -7,24 +7,6 @@ environment:
   VER: 2512.2.0
   IMAGE: flatcar_production_openstack_image.img
   IMAGE_Z: flatcar_production_openstack_image.img.bz2
-  OS_AUTH_URL:
-    from_secret: authurl
-  OS_PROJECT_ID:
-    from_secret: projectid
-  OS_PROJECT_NAME:
-    from_secret: projectname
-  OS_USER_DOMAIN_NAME:
-    from_secret: domain
-  OS_PROJECT_DOMAIN_ID:
-    from_secret: domain
-  OS_USERNAME:
-    from_secret: username
-  OS_PASSWORD:
-    from_secret: password
-  OS_REGION_NAME:
-    from_secret: region
-  OS_INTERFACE: public
-  OS_IDENTITY_API_VERSION: 3
 
 steps:
 - name: downloader
@@ -46,6 +28,25 @@ steps:
   commands:
   - openstack image create coreos-2512.2.0-test --disk-format=qcow2 --file flatcar_production_openstack_image.img --public --property os_distro='coreos' --property os_type='linux'
   - echo done
+  environment:
+    OS_AUTH_URL:
+      from_secret: authurl
+    OS_PROJECT_ID:
+      from_secret: projectid
+    OS_PROJECT_NAME:
+      from_secret: projectname
+    OS_USER_DOMAIN_NAME:
+      from_secret: domain
+    OS_PROJECT_DOMAIN_ID:
+      from_secret: domain
+    OS_USERNAME:
+      from_secret: username
+    OS_PASSWORD:
+      from_secret: password
+    OS_REGION_NAME:
+      from_secret: region
+    OS_INTERFACE: public
+    OS_IDENTITY_API_VERSION: 3
 ---
 kind: secret
 name: username
