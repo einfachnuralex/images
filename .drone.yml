@@ -13,6 +13,8 @@ steps:
   - bzip2 -df flatcar_production_openstack_image.img.bz2
   - ls -la
   - openstack image create coreos-2512.2.0 --disk-format=qcow2 --file flatcar_production_openstack_image.img --public --property os_distro='coreos' --property os_type='linux'
+  - openstack image show coreos-2512.2.0
+  - echo done
   environment:
     VER: 2512.2.0
     IMAGE: flatcar_production_openstack_image.img
