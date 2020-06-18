@@ -4,6 +4,7 @@ type: kubernetes
 name: default
 
 environment:
+  URL: https://stable.release.flatcar-linux.net/amd64-usr
   VER: 2512.2.0
   IMAGE: flatcar_production_openstack_image.img
   IMAGE_Z: flatcar_production_openstack_image.img.bz2
@@ -12,21 +13,21 @@ steps:
 - name: downloader
   image: einfachnuralex/downloader:v0.5
   commands:
-  - wget -q https://stable.release.flatcar-linux.net/amd64-usr/2512.2.0/flatcar_production_openstack_image.img.bz2
-  - wget -q https://stable.release.flatcar-linux.net/amd64-usr/2512.2.0/flatcar_production_openstack_image.img.bz2.DIGESTS
+  - wget -q $URL/$VER/$IMAGE_Z
+  - wget -q $URL/$VER/$IMAGE_Z.DIGESTS
 - name: checker
   image: einfachnuralex/downloader:v0.5
   commands:
-  - sha512sum -c flatcar_production_openstack_image.img.bz2.DIGESTS
+  - sha512sum -c $IMAGE_Z.DIGESTS
 - name: extractor
   image: einfachnuralex/downloader:v0.5
   commands:
-  - bzip2 -df flatcar_production_openstack_image.img.bz2
+  - bzip2 -df IMAGE_Z
   - ls -la
 - name: uploader
   image: einfachnuralex/downloader:v0.5
   commands:
-  - openstack image create coreos-2512.2.0-test --disk-format=qcow2 --file flatcar_production_openstack_image.img --public --property os_distro='coreos' --property os_type='linux'
+  - openstack image create coreos-$VER-test --disk-format=qcow2 --file IMAGE --public --property os_distro='coreos' --property os_type='linux'
   - echo done
   environment:
     OS_AUTH_URL:
