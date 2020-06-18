@@ -22,12 +22,12 @@ steps:
 - name: extractor
   image: einfachnuralex/downloader:v0.5
   commands:
-  - bzip2 -df IMAGE_Z
+  - bzip2 -df $IMAGE_Z
   - ls -la
 - name: uploader
   image: einfachnuralex/downloader:v0.5
   commands:
-  - openstack image create coreos-$VER-test --disk-format=qcow2 --file IMAGE --public --property os_distro='coreos' --property os_type='linux'
+  - openstack image create coreos-$VER-test --disk-format=qcow2 --file $IMAGE --public --property os_distro='coreos' --property os_type='linux'
   - echo done
   environment:
     OS_AUTH_URL:
