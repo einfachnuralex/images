@@ -1,7 +1,30 @@
 ---
 kind: pipeline
 type: kubernetes
-name: lala
+name: default
+
+environment:
+  VER: 2512.2.0
+  IMAGE: flatcar_production_openstack_image.img
+  IMAGE_Z: flatcar_production_openstack_image.img.bz2
+  OS_AUTH_URL:
+    from_secret: authurl
+  OS_PROJECT_ID:
+    from_secret: projectid
+  OS_PROJECT_NAME:
+    from_secret: projectname
+  OS_USER_DOMAIN_NAME:
+    from_secret: domain
+  OS_PROJECT_DOMAIN_ID:
+    from_secret: domain
+  OS_USERNAME:
+    from_secret: username
+  OS_PASSWORD:
+    from_secret: password
+  OS_REGION_NAME:
+    from_secret: region
+  OS_INTERFACE: public
+  OS_IDENTITY_API_VERSION: 3
 
 steps:
 - name: downloader
@@ -9,34 +32,20 @@ steps:
   commands:
   - wget -q https://stable.release.flatcar-linux.net/amd64-usr/2512.2.0/flatcar_production_openstack_image.img.bz2
   - wget -q https://stable.release.flatcar-linux.net/amd64-usr/2512.2.0/flatcar_production_openstack_image.img.bz2.DIGESTS
+- name: checker
+  image: einfachnuralex/downloader:v0.5
+  commands:
   - sha512sum -c flatcar_production_openstack_image.img.bz2.DIGESTS
+- name: extractor
+  image: einfachnuralex/downloader:v0.5
+  commands:
   - bzip2 -df flatcar_production_openstack_image.img.bz2
   - ls -la
-  - openstack image create coreos-2512.2.0 --disk-format=qcow2 --file flatcar_production_openstack_image.img --public --property os_distro='coreos' --property os_type='linux'
-  - openstack image show coreos-2512.2.0
+- name: uploader
+  image: einfachnuralex/downloader:v0.5
+  commands:
+  - openstack image create coreos-2512.2.0-test --disk-format=qcow2 --file flatcar_production_openstack_image.img --public --property os_distro='coreos' --property os_type='linux'
   - echo done
-  environment:
-    VER: 2512.2.0
-    IMAGE: flatcar_production_openstack_image.img
-    IMAGE_Z: flatcar_production_openstack_image.img.bz2
-    OS_AUTH_URL:
-      from_secret: authurl
-    OS_PROJECT_ID:
-      from_secret: projectid
-    OS_PROJECT_NAME:
-      from_secret: projectname
-    OS_USER_DOMAIN_NAME:
-      from_secret: domain
-    OS_PROJECT_DOMAIN_ID:
-      from_secret: domain
-    OS_USERNAME:
-      from_secret: username
-    OS_PASSWORD:
-      from_secret: password
-    OS_REGION_NAME:
-      from_secret: region
-    OS_INTERFACE: public
-    OS_IDENTITY_API_VERSION: 3
 ---
 kind: secret
 name: username
